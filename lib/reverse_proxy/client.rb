@@ -16,7 +16,7 @@ module ReverseProxy
     }
 
     # Define callback setters
-    @@callback_methods.each do |method|
+    @@callback_methods.each do |method, _|
       define_method(method) do |&block|
         self.callbacks[method] = block
       end
@@ -30,7 +30,7 @@ module ReverseProxy
 
       # Initialize default callbacks with empty Proc
       @@callback_methods.each do |method, default_return|
-        self.callbacks[method] = Proc.new { return default_return }
+        self.callbacks[method] = Proc.new { default_return }
       end
 
       yield(self) if block_given?
